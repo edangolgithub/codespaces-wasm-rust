@@ -1,0 +1,35 @@
+# ---------------------------------------------------------
+# Persistent Volume
+# ---------------------------------------------------------
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jupyter-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""  
+  hostPath:
+    path: /k3s-data/jupyter
+    type: DirectoryOrCreate
+
+---
+# ---------------------------------------------------------
+# Persistent Volume Claim
+# ---------------------------------------------------------
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jupyter-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ""  
+
+---

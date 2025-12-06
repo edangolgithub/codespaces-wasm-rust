@@ -1,0 +1,27 @@
+{
+	"name": "Rust & Typescript",
+	"image": "ghcr.io/prulloac/base:ubuntu-24.04",
+
+	// 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/prulloac/devcontainer-features/bun:1": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/rust": {
+			"version": "ubuntu-24.04",
+			"profile": "complete"
+		},
+		"ghcr.io/devcontainers/features/rust:1": {},
+		"ghcr.io/ebaskoro/devcontainer-features/emscripten:1": {},
+		"ghcr.io/devcontainers-extra/features/cmake:1": {}
+	},
+
+	// 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
+	 "forwardPorts": [8080]
+
+	// 👇 Configure tool-specific properties.
+	// "customizations": {},
+
+	// 👇 Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}

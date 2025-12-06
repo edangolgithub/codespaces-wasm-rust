@@ -1,0 +1,83 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-config
+data:
+  mosquitto.conf: |
+    persistence true
+    persistence_location /mosquitto/data/
+    listener 1883 0.0.0.0
+    protocol mqtt
+    allow_anonymous true
+    log_dest stdout
+    log_type all
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+spec:
+  selector:
+    app: mosquitto
+  ports:
+    - name: mqtt
+      port: 1883
+      targetPort: 1883
+      nodePort: 32763
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mosquitto
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      containers:
+      - name: mosquitto
+        image: eclipse-mosquitto:2.0.15
+        ports:
+        - containerPort: 1883
+        volumeMounts:
+        - name: config-volume
+          mountPath: /mosquitto/config/mosquitto.conf
+          subPath: mosquitto.conf
+        - name: data-volume
+          mountPath: /mosquitto/data
+      volumes:
+      - name: config-volume
+        configMap:
+          name: mosquitto-config
+      - name: data-volume
+        emptyDir: {}
+
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: temp-publisher
+spec:
+  containers:
+  - name: publisher
+    image: eclipse-mosquitto:latest
+    command: ["sh", "-c"]
+    args:
+      - |
+        apk add mosquitto-clients > /dev/null 2>&1;
+        while true; do
+          temp=$((20 + RANDOM % 15));
+          mosquitto_pub -h mosquitto -p 1883 -t sensor/temperature -m "$temp";
+          echo "Published temp: $temp";
+          sleep 5;
+        done

@@ -1,0 +1,116 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: multi-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: nginx.wsl
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+              
+  - host: api.wsl
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dotnetapi-service
+            port:
+              number: 80
+
+  - host: rabbitmq.wsl       # <--- new rule for RabbitMQ
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rabbitmq-ui      # the ClusterIP service for RabbitMQ
+            port:
+              number: 15672
+
+  - host: dotnetpublisher.wsl      # <--- YOUR NEW ENTRY
+    http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: dotnet-publisher   # must match your service name
+              port:
+                number: 8080           # adjust if your app listens on another port
+  
+  - host: dotnetsubscriber.wsl      # <--- YOUR NEW ENTRY
+    http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: dotnet-subscriber   # must match your service name
+              port:
+                number: 8080           # adjust if your app listens on another port
+
+  - host: redis.wsl
+    http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: redis-commander
+                port:
+                  number: 8081
+  
+  - host: prometheus.wsl
+    http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus
+                port:
+                  number: 9090
+  - host: grafana.wsl
+    http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
+  
+  - host: nextjs.wsl
+    http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nextjs-service
+                port:
+                  number: 80
+  
+  - host: angular.wsl
+    http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: angular-service
+                port:
+                  number: 80

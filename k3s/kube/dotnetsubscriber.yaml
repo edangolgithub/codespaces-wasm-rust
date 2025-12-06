@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-subscriber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet-subscriber
+  template:
+    metadata:
+      labels:
+        app: dotnet-subscriber
+    spec:
+      containers:
+      - name: dotnet-subscriber
+        image: edangol/dotnetsubscriber:latest
+        env:
+        - name: RABBITMQ_HOST
+          value: rabbitmq
+        - name: RABBITMQ_USER
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: RABBITMQ_USER
+        - name: RABBITMQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-secret
+              key: RABBITMQ_PASSWORD
+---
+# 1️⃣ Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-subscriber
+spec:
+  selector:
+    app: dotnet-subscriber
+  ports:
+    - protocol: TCP
+      port: 8080        # Service port inside cluster
+      targetPort: 8080  # Container port (Kestrel listens on 8080)
+  type: ClusterIP

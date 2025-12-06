@@ -1,0 +1,58 @@
+
+# ---------------------------------------------------------
+# Deployment (JupyterLab with Python 3)
+# ---------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jupyterlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jupyterlab
+  template:
+    metadata:
+      labels:
+        app: jupyterlab
+    spec:
+      containers:
+      - name: jupyterlab
+        image: jupyter/minimal-notebook:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8888
+        volumeMounts:
+        - name: notebook-storage
+          mountPath: /home/jovyan/work
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+        command: ["start-notebook.sh"]
+        args: ["--NotebookApp.token=''", "--NotebookApp.password=''"]
+      volumes:
+      - name: notebook-storage
+        persistentVolumeClaim:
+          claimName: jupyter-pvc
+
+---
+# ---------------------------------------------------------
+# Service (NodePort)
+# ---------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: jupyterlab
+spec:
+  type: NodePort
+  selector:
+    app: jupyterlab
+  ports:
+    - name: http
+      port: 8888
+      targetPort: 8888
+      nodePort: 32008

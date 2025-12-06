@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  type: NodePort
+  selector:
+    app: jupyterlab
+  ports:
+    - port: 5000        # port inside pod
+      targetPort: 5000  # same as pod port
+      nodePort: 32009   # port on host

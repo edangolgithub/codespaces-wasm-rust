@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt-dotnet-subscriber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mqtt-dotnet-subscriber
+  template:
+    metadata:
+      labels:
+        app: mqtt-dotnet-subscriber
+    spec:
+      containers:
+      - name: mqtt-dotnet-subscriber
+        image: edangol/mqtt-dotnet-subscriber:1.0
+        env:
+          - name: Mqtt__Host
+            value: "mosquitto"
+          - name: Mqtt__Port
+            value: "1883"
