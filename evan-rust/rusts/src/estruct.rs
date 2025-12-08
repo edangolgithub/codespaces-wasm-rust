@@ -29,7 +29,7 @@ pub fn run_coffee() {
     display_java(&java);
 }
 
-pub fn display_java(java: &Coffee) {
+fn display_java(java: &Coffee) {
     println!("{:?}", java.is_hot);
 }
 
@@ -41,6 +41,8 @@ struct Coffee {
 }
 
 impl Coffee {
+
+    
     fn new(name: String, price: f32, is_hot: bool) -> Self {
         Self {
             name,
@@ -56,29 +58,75 @@ impl Coffee {
         println!("{:?}", self.price);
         println!("{:?}", self.is_hot);
     }
-    fn mut_coffee(mut self)
-    {
-        let name="evu";
-        self.name=name.to_string();
-        println!("{:?}",self);
+    fn mut_coffee(mut self) {
+        let name = "evu";
+        self.name = name.to_string();
+        println!("{:?}", self);
+    }
+    fn display_coffee1(&self) {
+        println!("{:?}", self.name);
+        println!("{:?}", self.price);
+        println!("{:?}", self.is_hot);
+    }
+
+    fn is_hotter(self: &Self, other: &Self) -> bool {
+        if self.price > other.price {
+            return true;
+        }
+        false
     }
 }
 
-pub fn demo_borrow_checker(){
-    let _my=Coffee{
-    name:"name".to_string(),
-    price:34.5,
-    is_hot:true
-   };
- _my.display_coffee();
- //println!("{:?}",_my);
+pub fn demo_borrow_checker() {
+    let _my = Coffee {
+        name: "name".to_string(),
+        price: 34.5,
+        is_hot: true,
+    };
+    _my.display_coffee();
+    //println!("{:?}",_my);
+}
+
+pub fn example1() {
+    let _my = Coffee {
+        name: "name".to_string(),
+        price: 34.5,
+        is_hot: true,
+    };
+    let _my1 = &_my;
+    println!("{:?}", _my1);
+    _my.mut_coffee();
+}
+pub fn example2() {
+    let _my = Coffee {
+        name: "name".to_string(),
+        price: 34.15,
+        is_hot: true,
+    };
+    _my.display_coffee1();
+    println!("{:?}", _my);
+}
+
+pub fn coffee_checker() {
+    let one = Coffee {
+        name: "one coffee".to_string(),
+        price: 34.15,
+        is_hot: true,
+    };
+    let two = Coffee {
+        name: "two coffee".to_string(),
+        price: 35.15,
+        is_hot: true,
+    };
+    let cool_one = one.is_hotter(&two);
+    println!("{}", cool_one);
 }
 
 pub fn run() {
-   let _my=Coffee{
-    name:"name".to_string(),
-    price:34.5,
-    is_hot:true
-   };
-   _my.mut_coffee();
+      let two = Coffee {
+        name: "two coffee".to_string(),
+        price: 35.15,
+        is_hot: true,
+    };
+   display_java(&two);
 }

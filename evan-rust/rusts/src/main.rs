@@ -12,11 +12,13 @@ mod mod_mod;
 mod vectors_mod;
 mod enum_mod;
 mod slice_mod;
+
+mod generic_mod;
 //use func::run_account;
 
 //#[allow(unused_variables)]
 fn run() {
- estruct::run();
+ vectors_mod::run();
 }
 
 
