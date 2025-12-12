@@ -1,0 +1,5 @@
+Word frequencies:
+hi: 2
+how: 1
+you: 1
+are: 1

@@ -1,6 +1,5 @@
 use crate::estruct::BankAccount;
-fn firstfn()
-{
+fn firstfn() {
     println!("Hello, world!");
     let name = "evan";
     println!("my name is {}", name);
@@ -16,38 +15,35 @@ fn learnvector() {
     vector_numbers.push(7);
     println!("{:?}", vector_numbers);
 
-    let mut second_vector=Vec::new();
+    let mut second_vector = Vec::new();
     second_vector.push(5);
-    println!("{:?}",second_vector);
-
+    println!("{:?}", second_vector);
 }
 // struct BankAccount
 // {
 //     balance:i32,
 //     verified:bool
 // }
-pub fn run_account()
-{
-    let my_account= BankAccount{
-        balance:24,
-        verified:true
+pub fn run_account() {
+    let my_account = BankAccount {
+        balance: 24,
+        verified: true,
     };
     print_account(&my_account);
     print_afain(&my_account);
 }
 
-fn print_account(account: &BankAccount)
-{
-    println!("{:?}",account.balance);
-    println!("{:?}",account.verified);
-
-
+fn print_account(account: &BankAccount) {
+    println!("{:?}", account.balance);
+    println!("{:?}", account.verified);
 }
 
-fn print_afain(account: &BankAccount)
-{
-    println!("{:?}",account.balance);
-    println!("{:?}",account.verified);
+fn print_afain(account: &BankAccount) {
+    println!("{:?}", account.balance);
+    println!("{:?}", account.verified);
+}
 
-
+fn tuple_test() -> (String, i32, i32, i32, bool) {
+    let tp = ("abc".to_owned(), 1, 1, 3, true);
+    tp
 }

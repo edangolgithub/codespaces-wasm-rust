@@ -13,12 +13,16 @@ mod vectors_mod;
 mod enum_mod;
 mod slice_mod;
 
+mod usefuls;
+
 mod generic_mod;
+
+mod string_mod;
 //use func::run_account;
 
 //#[allow(unused_variables)]
 fn run() {
- vectors_mod::run();
+string_mod::run();
 }
 
 
