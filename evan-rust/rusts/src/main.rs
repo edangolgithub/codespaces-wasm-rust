@@ -18,11 +18,11 @@ mod usefuls;
 mod generic_mod;
 
 mod string_mod;
-//use func::run_account;
+mod guessing_game;
 
 //#[allow(unused_variables)]
 fn run() {
-string_mod::run();
+guessing_game::load_game();
 }
 
 
