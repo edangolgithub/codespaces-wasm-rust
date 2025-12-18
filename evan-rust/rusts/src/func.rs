@@ -47,3 +47,24 @@ fn tuple_test() -> (String, i32, i32, i32, bool) {
     let tp = ("abc".to_owned(), 1, 1, 3, true);
     tp
 }
+
+fn fn_tup() {
+    // let tup: (i32, f64, u8) = (500, 6.4, 1);
+    let tup = (500, 6.4, 1);
+
+    let (x, y, z) = tup;
+
+    println!("The value of y is: {y}");
+
+     let x: (i32, f64, u8) = (500, 6.4, 1);
+
+    let five_hundred = x.0;
+
+    let six_point_four = x.1;
+
+    let one = x.2;
+}
+pub fn run() {
+    let x = true;
+    let heart_eyed_cat = '😻';
+}

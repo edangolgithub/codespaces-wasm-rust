@@ -34,3 +34,13 @@ pub fn add_fries(mut meal: String) {
     meal.push_str(" add fries");
     println!("{:?}", meal);
 }
+
+fn var_scope()
+{
+    let s = String::from("hello");
+}
+
+pub fn run()
+{
+ var_scope();
+}
